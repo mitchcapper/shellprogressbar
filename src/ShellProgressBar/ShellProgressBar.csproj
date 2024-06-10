@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>ShellProgressBar</AssemblyName>
     <RootNamespace>ShellProgressBar</RootNamespace>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -10,8 +10,5 @@
     <Title>Cross platform simple and complex progressbars on the command line!</Title>
     <Authors>Martijn Laarman</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/Mpdreamz/shellprogressbar</PackageProjectUrl>
-    <PackageIconUrl>https://raw.github.com/Mpdreamz/shellprogressbar/master/src/nuget-icon.png</PackageIconUrl>
-    <PackageTags>console;shell;terminal;progress;progressbar</PackageTags>
   </PropertyGroup>
 </Project>
