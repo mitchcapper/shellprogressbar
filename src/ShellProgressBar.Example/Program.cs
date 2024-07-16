@@ -43,7 +43,8 @@ namespace ShellProgressBar.Example
 			new DeeplyNestedProgressBarTreeExample(),
 			new EstimatedDurationExample(),
 			new DownloadProgressExample(),
-			new AlternateFinishedColorExample()
+			new AlternateFinishedColorExample(),
+			new AutomaticEstimatedDurationExample()
 		};
 
 		public static async Task Main(string[] args)

@@ -78,9 +78,16 @@ namespace ShellProgressBar
 
 		public TimeSpan EstimatedDuration
 		{
-			get => _estimatedDuration;
+			get
+			{
+				if (Options.AutomaticEstimatedDuration)
+					_estimatedDuration = TimeSpan.FromSeconds((DateTime.Now-_startDate).TotalSeconds/(CurrentTick> 0 ? CurrentTick : 1) * MaxTicks );
+				return _estimatedDuration;
+			}
 			set
 			{
+				if (Options.AutomaticEstimatedDuration)
+					throw new ArgumentException("Cannot manually set EstimatedDuration when AutomaticEstimatedDuration is enabled");
 				_estimatedDuration = value;
 				DisplayProgress();
 			}
@@ -148,7 +155,11 @@ namespace ShellProgressBar
 			else
 				Interlocked.Exchange(ref _currentTick, newTickCount.Value);
 			if (estimatedDuration != null)
+			{
+				if (Options.AutomaticEstimatedDuration)
+					throw new ArgumentException("Cannot manually set EstimatedDuration when AutomaticEstimatedDuration is enabled");
 				_estimatedDuration = estimatedDuration.Value;
+			}
 
 			if (message != null)
 				Interlocked.Exchange(ref _message, message);
