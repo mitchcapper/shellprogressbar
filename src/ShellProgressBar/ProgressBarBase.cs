@@ -131,35 +131,25 @@ namespace ShellProgressBar
 		public abstract void WriteErrorLine(string message);
 
 
-		public void Tick(string message = null)
+		public void Tick(string message = null) => _Tick(message:message);
+		public void Tick(int newTickCount, string message = null) => _Tick(newTickCount:newTickCount,message:message);
+		public void Tick(TimeSpan estimatedDuration, string message = null) => _Tick(estimatedDuration:estimatedDuration,message:message);
+		public void Tick(int newTickCount, TimeSpan estimatedDuration, string message = null) => _Tick(newTickCount:newTickCount,estimatedDuration:estimatedDuration,message:message);
+		/// <summary>
+		/// internal actual tick handler, if newTickCount is not specified it auto increments by one
+		/// </summary>
+		/// <param name="estimatedDuration"></param>
+		/// <param name="message"></param>
+		/// <param name="newTickCount"></param>
+		private void _Tick(TimeSpan? estimatedDuration=null, string message = null,int? newTickCount=null)
 		{
-			Interlocked.Increment(ref _currentTick);
-			FinishTick(message);
-		}
+			if (newTickCount == null)
+				Interlocked.Increment(ref _currentTick);
+			else
+				Interlocked.Exchange(ref _currentTick, newTickCount.Value);
+			if (estimatedDuration != null)
+				_estimatedDuration = estimatedDuration.Value;
 
-		public void Tick(int newTickCount, string message = null)
-		{
-			Interlocked.Exchange(ref _currentTick, newTickCount);
-			FinishTick(message);
-		}
-
-		public void Tick(TimeSpan estimatedDuration, string message = null)
-		{
-			Interlocked.Increment(ref _currentTick);
-			_estimatedDuration = estimatedDuration;
-
-			FinishTick(message);
-		}
-		public void Tick(int newTickCount, TimeSpan estimatedDuration, string message = null)
-		{
-			Interlocked.Exchange(ref _currentTick, newTickCount);
-			_estimatedDuration = estimatedDuration;
-
-			FinishTick(message);
-		}
-
-		private void FinishTick(string message)
-		{
 			if (message != null)
 				Interlocked.Exchange(ref _message, message);
 
