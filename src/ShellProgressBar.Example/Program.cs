@@ -80,7 +80,9 @@ namespace ShellProgressBar.Example
 
 		private static async Task RunExample(int nth, CancellationToken token)
 		{
-			if (nth > Examples.Count - 1 || nth < 0)
+			if (nth < 0)
+				nth = Examples.Count + nth;
+			if (nth > Examples.Count - 1)
 			{
 				await Console.Error.WriteLineAsync($"There are only {Examples.Count} examples, {nth} is not valid");
 			}
